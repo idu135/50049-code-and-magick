@@ -44,7 +44,7 @@ window.renderStatistics = function(ctx, names, times){
 
       ctx.fillRect(histoX + columnIndent * i, 200, columnWidth, -height);
       ctx.fillStyle = '#000';
-      ctx.fillText(name + ' : ' + time, histoX + columnIndent * i, histoHeight+ 80);
+      ctx.fillText(name + ' : ' + time.toFixed(0), histoX + columnIndent * i, histoHeight+ 80);
     }
 }
 
