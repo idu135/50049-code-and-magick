@@ -14,7 +14,7 @@ window.renderStatistics = function(ctx, names, times){
 	};
 
 	var randomColor = function(){
-	  return 'rgba(0, 0, ' + (Math.random() * 255).toFixed(0) + ', ' + (Math.random() * 0.5).toFixed(1) + ')';
+	  return 'rgba(0, 0, ' + (Math.random() * 255).toFixed(0) + ', ' + (Math.random() * 0.7).toFixed(1) + ')';
 	}
 
 	drawRect(110, 20, 420, 270, 'rgba(0, 0, 0, 0.7)');
@@ -35,7 +35,7 @@ window.renderStatistics = function(ctx, names, times){
       }
   }
 		var histoHeight = 150,
-    histoX = 110,
+    histoX = 150,
 	  columnWidth = 40,
 	  columnIndent = 90,
 	  step = histoHeight / max;
@@ -51,7 +51,8 @@ window.renderStatistics = function(ctx, names, times){
       	var max = 255, min = 1;
       }
 
-      drawRect(histoX + columnIndent * i, 200, columnWidth, -height, currentColor);
-      drawText(name + ' : ' + time.toFixed(0), histoX + columnIndent * i, histoHeight+ 80);
+      drawRect(histoX + columnIndent * i, 240, columnWidth, -height, currentColor);
+      drawText(name, histoX + columnIndent * i, histoHeight + 115);
+			drawText(time.toFixed(0), histoX + columnIndent * i, histoHeight - height + 70);
     }
 }
