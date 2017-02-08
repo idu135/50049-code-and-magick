@@ -33,14 +33,49 @@ var fireballColors = [
 var randomColorNumber = function (array) {
   return Math.floor(Math.random() * array.length);
 };
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
+
+var pressEnter = function (evt) {
+  return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
+};
+
+var pressEscape = function (evt) {
+  return evt.keyCode && evt.keyCode === ESCAPE_KEY_CODE;
+};
+
+var showSetup = function () {
+  setup.classList.remove('invisible');
+};
+
+var hideSetup = function () {
+  setup.classList.add('invisible');
+};
 
 setupOpen.addEventListener('click', function () {
-  setup.classList.remove('invisible');
+  showSetup();
 });
 
 setupClose.addEventListener('click', function () {
-  setup.classList.add('invisible');
+  hideSetup();
 });
+
+setupOpen.addEventListener('keydown', function () {
+  if (pressEnter) {
+    showSetup();
+    document.addEventListener('keydown', function () {
+      if (pressEscape) {
+        hideSetup();
+      }
+      setupClose.addEventListener('keydown', function () {
+        if (pressEnter) {
+          hideSetup();
+        }
+      });
+    });
+  }
+});
+
 
 setupUserName.required = true;
 setupUserName.maxLength = 50;
