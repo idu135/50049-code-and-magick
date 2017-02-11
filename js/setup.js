@@ -8,6 +8,7 @@ var wizard = document.querySelector('#wizard');
 var wizardCoat = wizard.querySelector('#wizard-coat');
 var wizardEyes = wizard.querySelector('#wizard-eyes');
 var setupFireball = setup.querySelector('.setup-fireball-wrap');
+var setupSave = setup.querySelector('.setup-submit');
 var wizardCoatColors = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
@@ -36,46 +37,52 @@ var randomColorNumber = function (array) {
 var ENTER_KEY_CODE = 13;
 var ESCAPE_KEY_CODE = 27;
 
-var pressEnter = function (evt) {
-  return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
-};
-
-var pressEscape = function (evt) {
-  return evt.keyCode && evt.keyCode === ESCAPE_KEY_CODE;
-};
-
 var showSetup = function () {
   setup.classList.remove('invisible');
 };
 
 var hideSetup = function () {
   setup.classList.add('invisible');
+  setup.setAttribute('role', 'aria-hidden');
 };
 
 setupOpen.addEventListener('click', function () {
   showSetup();
+  setupSave.addEventListener('click', hideSetup);
+  setupSave.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY_CODE) {
+      hideSetup();
+    }
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESCAPE_KEY_CODE) {
+      hideSetup();
+      setup.setAttribute('role', 'aria-hidden');
+    }
+  });
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEY_CODE) {
+    showSetup();
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESCAPE_KEY_CODE) {
+        hideSetup();
+      }
+    });
+  }
 });
 
 setupClose.addEventListener('click', function () {
   hideSetup();
 });
 
-setupOpen.addEventListener('keydown', function () {
-  if (pressEnter) {
-    showSetup();
-    document.addEventListener('keydown', function () {
-      if (pressEscape) {
-        hideSetup();
-      }
-      setupClose.addEventListener('keydown', function () {
-        if (pressEnter) {
-          hideSetup();
-        }
-      });
-    });
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEY_CODE) {
+    hideSetup();
   }
 });
-
 
 setupUserName.required = true;
 setupUserName.maxLength = 50;
